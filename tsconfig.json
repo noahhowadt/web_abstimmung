@@ -1,0 +1,10 @@
+// basic tsconfig for project
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "outDir": "./frontend/dist",
+    "esModuleInterop": true
+  }
+}
