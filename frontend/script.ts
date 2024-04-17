@@ -22,6 +22,7 @@ function changeView(newView: "home" | "create" | "view") {
   if (view === "view") viewPage.show();
 }
 
+//Appointments erstellen und speichern
 function saveAppointment() {
   const namen = $("#name").val() as string;
   const titel = $("#titel").val() as string;
@@ -57,4 +58,22 @@ function saveAppointment() {
       console.log(data);
     });
   }
+}
+
+//Appointments als Liste anzeigen
+function getAppointments() {
+  $.get("/get-appointments.php", (data) => {
+    console.log(data);
+    for (const appointment of data) {
+      const appointmentElement = $(`
+      <div class="appointment">
+        <h3>${appointment.titel}</h3>
+        <p>${appointment.date} um ${appointment.beginTime} Uhr</p>
+        <p>${appointment.dauer} Stunden</p>
+        <p>${appointment.ort}</p>
+        <p>${appointment.beschreibung}</p>
+        `);
+      $("#appointments").append(appointmentElement);
+    }
+  });
 }
