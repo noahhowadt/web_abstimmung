@@ -93,28 +93,6 @@
               </div>
 
               <div class="form-group">
-                <label for="date">Datum</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="date"
-                  name="date"
-                  placeholder="Datum"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="beginTime">Beginnzeit</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="beginTime"
-                  name="beginTime"
-                  placeholder="Beginnzeit"
-                />
-              </div>
-
-              <div class="form-group">
                 <label for="dauer">Dauer</label>
                 <input
                   class="form-control"
@@ -146,6 +124,61 @@
                   placeholder="Geben Sie hier die Details zum Termin an:"
                 />
               </div>
+
+              <div class="form-group">
+                <label for="date">Votingschluss Datum</label>
+                <input
+                  class="form-control date-picker"
+                  type="text"
+                  id="vontingEndDate"
+                  name="vontingEndDate"
+                  placeholder="Votingschluss Datum"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="vontingEndTime">Votingschluss Zeit</label>
+                <input
+                  class="form-control time-picker"
+                  type="text"
+                  id="vontingEndTime"
+                  name="vontingEndTime"
+                  placeholder="Votingschluss Zeit"
+                />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <h3>Date options</h3>
+              <div class="form-group">
+                <label for="date">Datum</label>
+                <input
+                  class="form-control date-picker"
+                  type="text"
+                  id="add-date-option-date"
+                  name="date"
+                  placeholder="Datum"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="beginTime">Beginnzeit</label>
+                <input
+                  class="form-control time-picker"
+                  type="text"
+                  id="add-date-option-time"
+                  name="beginTime"
+                  placeholder="Beginnzeit"
+                />
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="add-date-option"
+              >
+                Add option <i class="fas fa-plus"></i>
+              </button>
+
+              <ul id="date-options-list" class="list-group mt-4"></ul>
             </div>
 
             <button
@@ -200,7 +233,7 @@
         dateFormat: "d.m.Y",
         minDate: "today", // disable past dates
       };
-      flatpickr("#date", config);
+      flatpickr(".date-picker", config);
     </script>
     <script>
       var config = {
@@ -209,7 +242,7 @@
         dateFormat: "H:i",
         time_24hr: true,
       };
-      flatpickr("#beginTime", config);
+      flatpickr(".time-picker", config);
     </script>
   </body>
 </html>
