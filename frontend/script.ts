@@ -25,6 +25,12 @@ function changeView(newView: "home" | "create" | "view") {
 //Appointments erstellen und speichern
 function saveAppointment() {
   const namen = $("#name").val() as string;
+// handle create appointment
+$("#save-appointment").on("click", saveAppointment);
+function saveAppointment(e: JQuery.Event) {
+  e.preventDefault();
+  console.log("save appointment");
+  const name = $("#name").val() as string;
   const titel = $("#titel").val() as string;
   const date = $("#date").val() as string;
   const beginTime = $("#beginTime").val() as string;
@@ -77,7 +83,6 @@ function getAppointments() {
     }
   });
 }
-
 
 // handle date options
 const dateOptions: Array<Date> = [];

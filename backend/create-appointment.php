@@ -8,8 +8,8 @@ include "common/allowedMethods.php";
 allowedMethods(["POST"]);
 
 // check if required fields are set
-if (!isset($body["name"]) || !isset($body["title"]) || !isset($body["description"]) || !isset($body["duration"]) || !isset($body["location"]) || !isset($body["expires_at"]) || !isset($body["options"]) || !is_array($body["options"]) || count($body["options"]) < 2) {
-  sendResponse(400, ["error" => "Bad Request"]);
+if (!isset($body["name"]) || !isset($body["titel"]) || !isset($body["beschreibung"]) || !isset($body["dauer"]) || !isset($body["ort"]) || !isset($body["votingEndDate"]) || !isset($body["votingEndTime"]) || !isset($body["options"]) || !is_array($body["options"]) || count($body["options"]) < 2) {
+  return sendResponse(400, ["error" => "Bad Request"]);
 }
 
 // create appointment
