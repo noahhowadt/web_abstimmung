@@ -22,30 +22,35 @@ function changeView(newView: "home" | "create" | "view") {
   if (view === "view") viewPage.show();
 }
 
-function saveAppointment() {
-  const namen = $("#name").val() as string;
+// handle create appointment
+$("#save-appointment").on("click", saveAppointment);
+function saveAppointment(e: JQuery.Event) {
+  e.preventDefault();
+  console.log("save appointment");
+  const name = $("#name").val() as string;
   const titel = $("#titel").val() as string;
-  const date = $("#date").val() as string;
-  const beginTime = $("#beginTime").val() as string;
+  const votingEndDate = $("#votingEndDate").val() as string;
+  const votingEndTime = $("#votingEndTime").val() as string;
   const dauer = $("#dauer").val() as string;
   const ort = $("#ort").val() as string;
   const beschreibung = $("#beschreibung").val() as string;
 
   const appointmentData = {
-    namen,
+    name,
     titel,
-    date,
-    beginTime,
+    votingEndDate,
+    votingEndTime,
     dauer,
     ort,
     beschreibung,
+    options: dateOptions.map((date) => date.toISOString()),
   };
 
   if (
-    namen === "" ||
+    name === "" ||
     titel === "" ||
-    date === "" ||
-    beginTime === "" ||
+    votingEndDate === "" ||
+    votingEndTime === "" ||
     dauer === "" ||
     ort === "" ||
     beschreibung === ""
@@ -53,18 +58,18 @@ function saveAppointment() {
     alert("Bitte füllen Sie alle Felder aus!");
     return;
   } else {
-    $.post("/create-appointment.php", appointmentData, (data) => {
+    $.post(`../backend/create-appointment.php`, appointmentData, (data) => {
       console.log(data);
     });
   }
 }
 
-
 // handle date options
 const dateOptions: Array<Date> = [];
 const dateOptionsList = $("#date-options-list");
 
-$("#add-date-option").on("click", () => {
+$("#add-date-option").on("click", (e) => {
+  e.preventDefault();
   const dateInputVal = $("#add-date-option-date").val() as string;
   const timeInputVal = $("#add-date-option-time").val() as string;
   // dateInputVal is in format 18.09.2023
