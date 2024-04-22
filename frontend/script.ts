@@ -22,9 +22,7 @@ function changeView(newView: "home" | "create" | "view") {
   if (view === "view") viewPage.show();
 }
 
-//Appointments erstellen und speichern
-function saveAppointment() {
-  const namen = $("#name").val() as string;
+
 // handle create appointment
 $("#save-appointment").on("click", saveAppointment);
 function saveAppointment(e: JQuery.Event) {
@@ -39,7 +37,7 @@ function saveAppointment(e: JQuery.Event) {
   const beschreibung = $("#beschreibung").val() as string;
 
   const appointmentData = {
-    namen,
+    name,
     titel,
     date,
     beginTime,
@@ -49,7 +47,7 @@ function saveAppointment(e: JQuery.Event) {
   };
 
   if (
-    namen === "" ||
+    name === "" ||
     titel === "" ||
     date === "" ||
     beginTime === "" ||
