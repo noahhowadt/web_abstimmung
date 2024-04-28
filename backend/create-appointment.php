@@ -8,8 +8,9 @@ include "common/allowedMethods.php";
 allowedMethods(["POST"]);
 
 // check if required fields are set
-if (!isset($body["name"]) || !isset($body["titel"]) || !isset($body["beschreibung"]) || !isset($body["dauer"]) || !isset($body["ort"]) || !isset($body["votingEndDate"]) || !isset($body["votingEndTime"]) || !isset($body["options"]) || !is_array($body["options"]) || count($body["options"]) < 2) {
-  return sendResponse(400, ["error" => "Bad Request"]);
+if (!isset($body["name"]) || !isset($body["title"]) || !isset($body["description"]) || !isset($body["duration"]) || !isset($body["location"]) || !isset($body["expires_at"]) || !isset($body["options"]) || !is_array($body["options"]) || count($body["options"]) < 2) {
+  //return body data not error
+  return sendResponse(400, $body);
 }
 
 // create appointment
@@ -21,11 +22,11 @@ $stmt->close();
 // add voting options
 $appointmentId = $db->insert_id;
 foreach ($body["options"] as $option) {
-  if (!isset($option["date"])) {
+  if (!isset($option)) {
     sendResponse(400, ["error" => "Bad Request"]);
   }
   $stmt = $db->prepare("INSERT INTO voting_options (appointment_id, date) VALUES (?, ?)");
-  $stmt->bind_param("is", $appointmentId, $option["date"]);
+  $stmt->bind_param("is", $appointmentId, $option);
   $stmt->execute();
   $stmt->close();
 }

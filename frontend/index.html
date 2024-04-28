@@ -82,67 +82,67 @@
               </div>
 
               <div class="form-group">
-                <label for="titel">Titel</label>
+                <label for="title">Titel</label>
                 <input
                   type="text"
-                  id="titel"
-                  name="titel"
+                  id="title"
+                  name="title"
                   class="form-control"
                   placeholder="Titel"
                 />
               </div>
 
               <div class="form-group">
-                <label for="dauer">Dauer</label>
+                <label for="duration">Dauer</label>
                 <input
                   class="form-control"
                   type="text"
-                  id="dauer"
-                  name="dauer"
+                  id="duration"
+                  name="duration"
                   placeholder="Dauer"
                 />
               </div>
 
               <div class="form-group">
-                <label for="ort">Ort</label>
+                <label for="location">Ort</label>
                 <input
                   type="text"
-                  id="ort"
-                  name="ort"
+                  id="location"
+                  name="location"
                   class="form-control"
                   placeholder="Ort"
                 />
               </div>
 
               <div class="form-group">
-                <label for="beschreibung">Beschreibung</label>
+                <label for="description">Beschreibung</label>
                 <input
                   type="text"
-                  id="beschreibung"
-                  name="beschreibung"
+                  id="description"
+                  name="description"
                   class="form-control"
                   placeholder="Geben Sie hier die Details zum Termin an:"
                 />
               </div>
 
               <div class="form-group">
-                <label for="date">Votingschluss Datum</label>
+                <label for="votingEndDate">Votingschluss Datum</label>
                 <input
                   class="form-control date-picker"
                   type="text"
-                  id="vontingEndDate"
-                  name="vontingEndDate"
+                  id="votingEndDate"
+                  name="votingEndDate"
                   placeholder="Votingschluss Datum"
                 />
               </div>
 
               <div class="form-group">
-                <label for="vontingEndTime">Votingschluss Zeit</label>
+                <label for="votingEndTime">Votingschluss Zeit</label>
                 <input
                   class="form-control time-picker"
                   type="text"
-                  id="vontingEndTime"
-                  name="vontingEndTime"
+                  id="votingEndTime"
+                  name="votingEndTime"
                   placeholder="Votingschluss Zeit"
                 />
               </div>
@@ -150,7 +150,7 @@
             <div class="col-sm-6">
               <h3>Date options</h3>
               <div class="form-group">
-                <label for="date">Datum</label>
+                <label for="add-date-option-date">Datum</label>
                 <input
                   class="form-control date-picker"
                   type="text"
@@ -161,7 +161,7 @@
               </div>
 
               <div class="form-group">
-                <label for="beginTime">Beginnzeit</label>
+                <label for="add-date-option-time">Beginnzeit</label>
                 <input
                   class="form-control time-picker"
                   type="text"
@@ -198,11 +198,7 @@
           <!-- Bootstrap col-md-6 class added -->
           <div class="app">
             <h2>Choose date</h2>
-            <form
-              onsubmit="return handleData()"
-              method="post"
-              action="https://postman-echo.com/post"
-            >
+            <form>
               <div class="form-check">
                 <input
                   class="form-check-input"

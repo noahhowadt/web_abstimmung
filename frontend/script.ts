@@ -1,13 +1,15 @@
 // handle the view of the app
-let view: "home" | "create" | "view" = "home";
+let view: "home" | "create" | "view";
 
 const homePage = $("#home-page");
 const createPage = $("#create-page");
 const viewPage = $("#view-page");
 
+
 $(".home-link").on("click", () => changeView("home"));
 $(".create-link").on("click", () => changeView("create"));
 $(".view-link").on("click", () => changeView("view"));
+
 
 changeView("home");
 
@@ -17,11 +19,10 @@ function changeView(newView: "home" | "create" | "view") {
   createPage.hide();
   viewPage.hide();
 
-  if (view === "home") homePage.show();
+  if (view === "home") homePage.show(), getAppointments();
   if (view === "create") createPage.show();
   if (view === "view") viewPage.show();
 }
-
 
 // handle create appointment
 $("#save-appointment").on("click", saveAppointment);
@@ -29,56 +30,83 @@ function saveAppointment(e: JQuery.Event) {
   e.preventDefault();
   console.log("save appointment");
   const name = $("#name").val() as string;
-  const titel = $("#titel").val() as string;
-  const date = $("#date").val() as string;
-  const beginTime = $("#beginTime").val() as string;
-  const dauer = $("#dauer").val() as string;
-  const ort = $("#ort").val() as string;
-  const beschreibung = $("#beschreibung").val() as string;
+  const title = $("#title").val() as string;
+  const duration = $("#duration").val() as string;
+  const location = $("#location").val() as string;
+  const description = $("#description").val() as string;
+  const votingEndDate = $("#votingEndDate").val() as string;
+  const votingEndTime = $("#votingEndTime").val() as string;
+
+  const [day, month, year] = votingEndDate.split(".");
+  const formattedDate = `${month}/${day}/${year} ${votingEndTime}`;
+
+  const expires_at = new Date(formattedDate);
 
   const appointmentData = {
     name,
-    titel,
-    date,
-    beginTime,
-    dauer,
-    ort,
-    beschreibung,
+    title,
+    duration,
+    location,
+    description,
+    expires_at,
+    options: dateOptions.map((date) => date.toISOString()),
   };
 
   if (
     name === "" ||
-    titel === "" ||
-    date === "" ||
-    beginTime === "" ||
-    dauer === "" ||
-    ort === "" ||
-    beschreibung === ""
+    title === "" ||
+    duration === "" ||
+    location === "" ||
+    description === "" ||
+    votingEndDate === "" ||
+    votingEndTime === "" ||
+    dateOptions.length < 2
   ) {
     alert("Bitte füllen Sie alle Felder aus!");
     return;
   } else {
-    $.post("/create-appointment.php", appointmentData, (data) => {
-      console.log(data);
+    $.ajax({
+      url: "../backend/create-appointment.php",
+      type: "POST",
+      data: JSON.stringify(appointmentData),
+      contentType: "application/json",
+      success: function (data) {
+        console.log(data);
+      },
     });
   }
 }
 
 //Appointments als Liste anzeigen
 function getAppointments() {
-  $.get("/get-appointments.php", (data) => {
+  $.get("../backend/get-appointments.php", (data) => {
     console.log(data);
-    for (const appointment of data) {
+    $("#home-page").empty();
+    for (const appointment of JSON.parse(data)) {
       const appointmentElement = $(`
       <div class="appointment">
-        <h3>${appointment.titel}</h3>
-        <p>${appointment.date} um ${appointment.beginTime} Uhr</p>
-        <p>${appointment.dauer} Stunden</p>
-        <p>${appointment.ort}</p>
-        <p>${appointment.beschreibung}</p>
-        `);
-      $("#appointments").append(appointmentElement);
+          <h3>${appointment.title}</h3>
+          <p>${appointment.duration} Stunden</p>
+          <p>${appointment.location}</p>
+          <p>${appointment.description}</p>
+          <p>Abstimmung bis ${new Date(
+            appointment.expires_at
+          ).toDateString()} um ${new Date(
+          appointment.expires_at
+        ).toTimeString()} Uhr</p>
+    <!--incoming added by Dicle-->
+          <button type="button" class="app">Details</button>
+    <!--end-->
+      </div>`);
+      $("#home-page").append(appointmentElement);
     }
+  });
+  $(document).on('click', '.app', function() {
+    const appointmentId = $(this).data('id');
+    $.get(`../backend/showDetails.php?id=${appointmentId}`, function(data) {
+      // Handle the data returned from showDetails.php
+      console.log(data);
+    });
   });
 }
 
