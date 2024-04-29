@@ -258,10 +258,11 @@ $("#vote-btn").on("click", (e) => {
     return;
   }
 
-  console.log(optionIds);
-  console.log(name);
-  console.log(comment);
-  console.log(viewId);
+  // clear form
+  $("#vote-name").val("");
+  $("#vote-comment").val("");
+  checkedCheckboxes.prop("checked", false);
+
   // send vote
   $.ajax({
     url: "../backend/vote.php",
@@ -275,6 +276,7 @@ $("#vote-btn").on("click", (e) => {
     contentType: "application/json",
     success: function (data) {
       console.log(data);
+      changeView("view", viewId as number);
     },
   });
 });
