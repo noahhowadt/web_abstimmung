@@ -82,78 +82,112 @@
               </div>
 
               <div class="form-group">
-                <label for="titel">Titel</label>
+                <label for="title">Titel</label>
                 <input
                   type="text"
-                  id="titel"
-                  name="titel"
+                  id="title"
+                  name="title"
                   class="form-control"
                   placeholder="Titel"
                 />
               </div>
 
               <div class="form-group">
-                <label for="date">Datum</label>
+                <label for="duration">Dauer</label>
                 <input
                   class="form-control"
                   type="text"
-                  id="date"
-                  name="date"
-                  placeholder="Datum"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="beginTime">Beginnzeit</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="beginTime"
-                  name="beginTime"
-                  placeholder="Beginnzeit"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="dauer">Dauer</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="dauer"
-                  name="dauer"
+                  id="duration"
+                  name="duration"
                   placeholder="Dauer"
                 />
               </div>
 
               <div class="form-group">
-                <label for="ort">Ort</label>
+                <label for="location">Ort</label>
                 <input
                   type="text"
-                  id="ort"
-                  name="ort"
+                  id="location"
+                  name="location"
                   class="form-control"
                   placeholder="Ort"
                 />
               </div>
 
               <div class="form-group">
-                <label for="beschreibung">Beschreibung</label>
+                <label for="description">Beschreibung</label>
                 <input
                   type="text"
-                  id="beschreibung"
-                  name="beschreibung"
+                  id="description"
+                  name="description"
                   class="form-control"
                   placeholder="Geben Sie hier die Details zum Termin an:"
                 />
               </div>
+
+              <div class="form-group">
+                <label for="votingEndDate">Votingschluss Datum</label>
+                <input
+                  class="form-control date-picker"
+                  type="text"
+                  id="votingEndDate"
+                  name="votingEndDate"
+                  placeholder="Votingschluss Datum"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="votingEndTime">Votingschluss Zeit</label>
+                <input
+                  class="form-control time-picker"
+                  type="text"
+                  id="votingEndTime"
+                  name="votingEndTime"
+                  placeholder="Votingschluss Zeit"
+                />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <h3>Date options</h3>
+              <div class="form-group">
+                <label for="add-date-option-date">Datum</label>
+                <input
+                  class="form-control date-picker"
+                  type="text"
+                  id="add-date-option-date"
+                  name="date"
+                  placeholder="Datum"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="add-date-option-time">Beginnzeit</label>
+                <input
+                  class="form-control time-picker"
+                  type="text"
+                  id="add-date-option-time"
+                  name="beginTime"
+                  placeholder="Beginnzeit"
+                />
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="add-date-option"
+              >
+                Add option <i class="fas fa-plus"></i>
+              </button>
+
+              <ul id="date-options-list" class="list-group mt-4"></ul>
             </div>
 
             <button
               type="submit"
+              id="save-appointment"
               class="btn btn-primary"
               style="margin: 0 15px; display: inline"
             >
-              Submit
+              Save appointment
             </button>
           </form>
         </div>
@@ -162,36 +196,42 @@
         <!-- Appointment Box -->
         <div>
           <!-- Bootstrap col-md-6 class added -->
-          <div class="app">
-            <h2>Choose date</h2>
-            <form
-              onsubmit="return handleData()"
-              method="post"
-              action="https://postman-echo.com/post"
-            >
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  id="check"
-                  name="option"
-                  value="appointment"
-                />
-                <label class="form-check-label">Titel</label>
-              </div>
+          <h2 id="view-title"></h2>
+          <p id="view-description"></p>
+          <p id="view-location"></p>
+          <p id="view-duration"></p>
+          <p id="view-voting-end"></p>
+          <form>
+            <!-- voting options as a table (will be filled in js) -->
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Select</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Votes</th>
+                </tr>
+              </thead>
+              <tbody id="voting-options"></tbody>
+            </table>
 
-              <div class="form-group">
-                <button
-                  type="submit"
-                  name="submit"
-                  class="btn btn-primary"
-                  style="margin: 0 15px"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+            <input type="text" id="vote-name" placeholder="Your name" />
+            <textarea
+              type="text"
+              id="vote-comment"
+              placeholder="Your comment"
+            ></textarea>
+            <div class="form-group">
+              <button
+                type="submit"
+                name="submit"
+                class="btn btn-primary"
+                id="vote-btn"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -200,7 +240,7 @@
         dateFormat: "d.m.Y",
         minDate: "today", // disable past dates
       };
-      flatpickr("#date", config);
+      flatpickr(".date-picker", config);
     </script>
     <script>
       var config = {
@@ -209,7 +249,7 @@
         dateFormat: "H:i",
         time_24hr: true,
       };
-      flatpickr("#beginTime", config);
+      flatpickr(".time-picker", config);
     </script>
   </body>
 </html>
