@@ -21,6 +21,10 @@ if (!$appointment) {
   return sendResponse(404, ["error" => "Not Found 1"]);
 }
 
+if ($appointment["expires_at"] < date("Y-m-d H:i:s")) {
+  return sendResponse(400, ["error" => "Appointment has expired"]);
+}
+
 $selectedOptions = $body["selectedOptions"];
 
 for ($i = 0; $i < count($selectedOptions); $i++) {
