@@ -150,10 +150,10 @@ function getAppointments() {
   $.get("../backend/get-appointments.php", (data) => {
     console.log(data);
     $("#home-page").empty();
-    for (const appointment of JSON.parse(data)) {
+    for (const appointment of JSON.parse(data) as Array<Appointment>) {
       const appointmentElement = $(`
       <div class="appointment">
-          <h3>${appointment.title}</h3>
+          <h3>${appointment.title} ${new Date(appointment.expires_at).getTime() < new Date().getTime() ? "(abgelaufen)": ""}</h3>
           <p>${appointment.duration} Stunden</p>
           <p>${appointment.location}</p>
           <p>${appointment.description}</p>
