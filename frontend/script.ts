@@ -52,6 +52,7 @@ function changeView(newView: "home" | "create" | "view", id?: number) {
         return;
       }
       $("#view-title").text(viewData.title);
+      $("#view-name").text(viewData.name);
       $("#view-duration").text(`Duration: ${viewData.duration} hours`);
       $("#view-location").text(viewData.location);
       $("#view-description").text(viewData.description);
@@ -139,7 +140,18 @@ function saveAppointment(e: JQuery.Event) {
       data: JSON.stringify(appointmentData),
       contentType: "application/json",
       success: function (data) {
-        console.log(data);
+        // clear form
+        $("#name").val("");
+        $("#title").val("");
+        $("#duration").val("");
+        $("#location").val("");
+        $("#description").val("");
+        $("#votingEndDate").val("");
+        $("#votingEndTime").val("");
+        dateOptions.length = 0;
+        dateOptionsList.empty();
+
+        changeView("view", JSON.parse(data).id);
       },
     });
   }
@@ -153,7 +165,11 @@ function getAppointments() {
     for (const appointment of JSON.parse(data) as Array<Appointment>) {
       const appointmentElement = $(`
       <div class="appointment">
-          <h3>${appointment.title} ${new Date(appointment.expires_at).getTime() < new Date().getTime() ? "(abgelaufen)": ""}</h3>
+          <h3>${appointment.title} ${
+        new Date(appointment.expires_at).getTime() < new Date().getTime()
+          ? "(abgelaufen)"
+          : ""
+      }</h3>
           <p>${appointment.duration} Stunden</p>
           <p>${appointment.location}</p>
           <p>${appointment.description}</p>

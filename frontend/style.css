@@ -1,14 +1,13 @@
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Die Breite des Containers ändern */
 .container {
   max-width: 1200px; /* Ändere die Breite nach Bedarf */
-
 }
 
-input[type=text],
+input[type="text"],
 select {
   width: 100%;
   padding: 12px 20px;
@@ -19,9 +18,9 @@ select {
   box-sizing: border-box;
 }
 
-input[type=submit] {
+input[type="submit"] {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -30,7 +29,7 @@ input[type=submit] {
   cursor: pointer;
 }
 
-input[type=submit]:hover {
+input[type="submit"]:hover {
   background-color: #45a049;
 }
 
@@ -67,4 +66,8 @@ input[type=submit]:hover {
 }
 .dark-teal-text {
   color: #004d40;
+}
+
+.appointment {
+  margin-bottom: 50px;
 }

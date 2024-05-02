@@ -31,4 +31,4 @@ foreach ($body["options"] as $option) {
   $stmt->close();
 }
 
-sendResponse(201);
+sendResponse(201, ["id" => $appointmentId]);
