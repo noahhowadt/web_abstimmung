@@ -1,0 +1,6 @@
+1. It says that the db variable is undefined. However, this is not the case, the analyzer seems to not be able to notice that the variable is included from common/db.php. Therefore, no action needs to be taken.
+2. The appointments variable is undefined. This is indeed correct. We don't need any data after the deletion on the frontend, so I just removed it.
+3. It complains that the result of a void function is returned. The return is just to stop the function from executing further, but for more clarification I moved the return in the line below the send response.
+4. Indeed the statement will be undefined. I moved the declaration outside of the loop.
+5. Same thing.
+6. That the body is undefined is not entirely correct. However, if there is data missing we should return a Bad Request response instead of the body.

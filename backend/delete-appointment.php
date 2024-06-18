@@ -30,4 +30,4 @@ $stmt->execute();
 $stmt->close();
 
 
-sendResponse(200, $appointments);
+sendResponse(200);

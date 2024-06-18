@@ -20,7 +20,8 @@ $appointment = $result->fetch_assoc();
 $appointmentStmt->close();
 
 if (!$appointment) {
-  return sendResponse(404, ["error" => "Not Found"]);
+  sendResponse(404, ["error" => "Not Found"]);
+  return;
 }
 
 $optionsStmt = $db->prepare("SELECT * FROM voting_options WHERE appointment_id = ?");
